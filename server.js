@@ -88,7 +88,7 @@ app.use(cors());
 app.use(express.json());
 app.listen(8084);
 
-app.get('/', (req, res) => {
+app.get('/', (_req, res) => {
     res.send('dice roller was started: ' + startedAt.toString());
 });
 
@@ -99,6 +99,6 @@ app.post('/api/new-roll', (req, res) => {
     res.sendStatus(200);
 })
 
-app.get('/api/last-rolls', (req, res) => {
+app.get('/api/last-rolls', (_req, res) => {
     res.send(JSON.stringify(rolls));
 })
