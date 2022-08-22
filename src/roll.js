@@ -1,33 +1,32 @@
 const _ = require('lodash');
 
 const processRoll = (cmd, advantage) => {
-    cmd = cmd.replace(/ /, '');
+    cmd = cmd.replace(/ /gi, '');
     cmd = cmd.toLowerCase();
 
     if (cmd.indexOf('+') !== -1) {
         let dices = cmd.split('+');
+        console.log(dices, advantage ? 'with advantage' : 'without advantage');
         return rollDices(dices, advantage);
     }
 
+    console.log([cmd], advantage ? 'with advantage' : 'without advantage');
     return rollDices([cmd], advantage);
 }
 
 const rollDices = (dices, advantage) => {
-    console.log(dices, advantage);
     let result = 0;
     let partialResults = [];
     dices.forEach((roll) => {
         if (roll.indexOf('d') === -1) {
             result += parseInt(roll);
             partialResults.push(parseInt(roll));
-            console.log(partialResults);
-        } else if (roll.startsWith('d')) {
+        } else if (/^d([0-9]*?)/.test(roll)) {
             roll = roll.replace(/d/, '');
             roll = parseInt(roll);
             roll = _.random(1, roll);
             result += roll;
             partialResults.push(roll);
-            console.log(partialResults);
         } else {
             let multipleDices = roll.split('d');
             
@@ -41,7 +40,6 @@ const rollDices = (dices, advantage) => {
             
             result += semiresult;
             
-            console.log(partialResults);
         }
     })
 
