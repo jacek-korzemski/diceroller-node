@@ -1,19 +1,19 @@
 const _ = require('lodash');
 
-const processRoll = (cmd) => {
+const processRoll = (cmd, advantage) => {
     cmd = cmd.replace(/ /, '');
     cmd = cmd.toLowerCase();
 
     if (cmd.indexOf('+') !== -1) {
         let dices = cmd.split('+');
-        return rollDices(dices);
+        return rollDices(dices, advantage);
     }
 
-    return rollDices([cmd]);
+    return rollDices([cmd], advantage);
 }
 
-const rollDices = (dices) => {
-    console.log(dices);
+const rollDices = (dices, advantage) => {
+    console.log(dices, advantage);
     let result = 0;
     let partialResults = [];
     dices.forEach((roll) => {
@@ -45,7 +45,14 @@ const rollDices = (dices) => {
         }
     })
 
-    return {result: result, details: partialResults};
+    if (!advantage) {
+        return {result: result, details: partialResults};
+    }
+
+    let firstRoll = {result: result, details: partialResults};
+    let secondRoll = rollDices(dices, false);
+
+    return [firstRoll, secondRoll];
 }
 
 module.exports.processRoll = processRoll;
