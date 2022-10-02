@@ -9,7 +9,7 @@ let rolls = [];
 
 app.use(cors());
 app.use(express.json());
-app.listen(process.env.PORT || 5000);
+app.listen(process.env.PORT || 3001);
 
 app.get('/', (_req, res) => {
     res.send('dice roller was started: ' + startedAt.toString());
