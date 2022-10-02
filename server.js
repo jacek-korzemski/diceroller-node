@@ -3,19 +3,22 @@ const cors = require('cors')
 const app = express();
 const startedAt = new Date();
 const { processRoll } = require('./src/roll');
+const port = process.env.PORT || 3001;
 
 let id = 1;
 let rolls = [];
 
 app.use(cors());
 app.use(express.json());
-app.listen(process.env.PORT || 3001, () => console.log(`App listening on port ${port}!`));
+app.listen(port, () => console.log(`App listening on port ${port}!`));
 
 app.get('/', (_req, res) => {
+    console.log('hit - home');
     res.send('dice roller was started: ' + startedAt.toString());
 });
 
 app.post('/api/new-roll', (req, res) => {
+    console.log('hit - new roll');
     const rContent = req.body;
     const resultRoll = processRoll(rContent.dices, rContent.advantage);
     let result;
@@ -35,5 +38,6 @@ app.post('/api/new-roll', (req, res) => {
 })
 
 app.get('/api/last-rolls', (_req, res) => {
+    console.log('hit - last rolls');
     res.send(JSON.stringify(rolls));
 })
