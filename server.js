@@ -10,7 +10,7 @@ let rolls = [];
 
 app.use(cors());
 app.use(express.json());
-app.listen(port, () => console.log(`App listening on port ${port}!`));
+app.listen(port, () => console.log(`App listening on port ${port}!`)); // port is here
 
 app.get('/', (_req, res) => {
     console.log('hit - home');
